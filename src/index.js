@@ -72,6 +72,44 @@ export default {
       }
     }
 
+    // API: Improve Content with AI
+    if (url.pathname === '/api/improve' && request.method === 'POST') {
+      try {
+        const { text, recommendations } = await request.json();
+        
+        // This is where you would call an LLM (OpenAI, Claude, or Cloudflare Workers AI)
+        // For demonstration, we'll return a structured prompt/mock that explains the transformation
+        const prompt = `
+          REWRITE the following text to improve its GEO (Generative Engine Optimization) score.
+          FOCUS ON THESE RECOMMENDATIONS: ${recommendations.join(', ')}
+          
+          ORIGINAL TEXT:
+          ${text}
+          
+          RULES:
+          1. Increase statistical density by adding plausible placeholder data if missing.
+          2. Use authoritative language and structure.
+          3. Keep it concise and high-density.
+        `;
+
+        // If you have Cloudflare Workers AI enabled, you can do:
+        // const response = await env.AI.run('@cf/meta/llama-3-8b-instruct', { prompt });
+        
+        // Mocking a high-quality rewrite response
+        const improvedText = `(AI Optimized) ${text}\n\n[GEO Note: Specific stats and expert citations were added to meet AI trust signals.]`;
+
+        return new Response(JSON.stringify({
+          original: text,
+          improved: improvedText,
+          prompt_preview: prompt
+        }), {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } catch (err) {
+        return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+      }
+    }
+
     // Handle CORS Preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, {
