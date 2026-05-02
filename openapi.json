@@ -1,0 +1,148 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "GEO Scoring Engine API",
+    "description": "High-performance, edge-native API for Generative Engine Optimization (GEO). Measures AI Trust signals, Hallucination Prevention Index, and Semantic Entity Density.",
+    "version": "2.0.0",
+    "contact": {
+      "name": "GEO Support",
+      "email": "support@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://your-worker-name.workers.dev",
+      "description": "Cloudflare Workers Production"
+    }
+  ],
+  "paths": {
+    "/api/analyze": {
+      "post": {
+        "summary": "Analyze content for GEO DNA",
+        "description": "Evaluates text or URL for AI trustworthiness signals, statistical density, and semantic entities.",
+        "operationId": "analyzeContent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "The raw text content to analyze.",
+                    "example": "According to a 2026 report, AI adoption has increased by 45%."
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "Optional URL to fetch and analyze directly.",
+                    "example": "https://example.com/ai-trends"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful analysis with detailed metrics.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/improve": {
+      "post": {
+        "summary": "AI-Powered Content Optimization (Pro)",
+        "description": "Rewrites the provided content to maximize GEO scores and AI trust signals.",
+        "operationId": "improveContent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "Original text to rewrite."
+                  },
+                  "recommendations": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Specific GEO improvements to focus on."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Optimized content result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "improved": { "type": "string" },
+                    "original": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalysisResult": {
+        "type": "object",
+        "properties": {
+          "geo_score": { "type": "integer", "example": 82 },
+          "hpi_score": { "type": "integer", "example": 90 },
+          "verdict": { "type": "string", "example": "High Potential" },
+          "analysis": {
+            "type": "object",
+            "properties": {
+              "data_authority": {
+                "type": "object",
+                "properties": {
+                  "score": { "type": "integer" },
+                  "comment": { "type": "string" }
+                }
+              },
+              "information_density": {
+                "type": "object",
+                "properties": {
+                  "top_entities": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string" },
+                        "count": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "recommendations": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
